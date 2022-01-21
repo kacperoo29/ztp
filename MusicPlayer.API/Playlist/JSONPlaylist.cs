@@ -2,6 +2,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Text.Json;
 using MusicPlayer.API.Core;
+using MusicPlayer.API.IO;
 
 namespace MusicPlayer.API
 {
@@ -11,8 +12,8 @@ namespace MusicPlayer.API
 
         public JSONPlaylist(string path)
         {
-            string jsonString = File.ReadAllText(path);
-            Songs = JsonSerializer.Deserialize<List<Song>>(jsonString) ?? throw new InvalidDataException();
+            var io = new JSONPlaylistIO();
+            Songs = io.Import(path);
         }    
     }
 }

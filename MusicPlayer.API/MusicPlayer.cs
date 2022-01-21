@@ -65,7 +65,7 @@ namespace MusicPlayer.API
 
         public void StartPlayback(Song song)
         {
-            using var media = new Media(_libVLC, song.Path);
+            using var media = new Media(_libVLC, song.Path ?? throw new InvalidDataException());
             _mediaPlayer = new MediaPlayer(media);
             _mediaPlayer.Play();
         }
