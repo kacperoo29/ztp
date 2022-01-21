@@ -1,5 +1,6 @@
 using LibVLCSharp.Shared;
 using MusicPlayer.API.Core;
+using MusicPlayer.API.IO;
 
 namespace MusicPlayer.API
 {
@@ -51,16 +52,28 @@ namespace MusicPlayer.API
 
         public void ToggleShuffle()
         {
-            _currentIterator = _currentIterator == IteratorType.Shuffle 
-                ? IteratorType.Ordered 
+            _currentIterator = _currentIterator == IteratorType.Shuffle
+                ? IteratorType.Ordered
                 : IteratorType.Shuffle;
             Iterator = Playlist?.CreateIterator(_currentIterator);
         }
 
-        public void SavePlaylist(string path)
+        public void SavePlaylistToJson(string path)
         {
             if (Playlist != null)
-                Playlist.SaveToFile(path);
+            {
+                var io = new JSONPlaylistIO();
+                io.Export(Playlist, path);
+            }
+        }
+
+        public void SavePlaylistToXML(string path)
+        {
+            if (Playlist != null)
+            {
+                var io = new XMLPlaylistIO();
+                io.Export(Playlist, path);
+            }
         }
 
         public void StartPlayback(Song song)
