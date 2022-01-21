@@ -1,3 +1,5 @@
+using MusicPlayer.API.Core;
+
 namespace MusicPlayer.API
 {
     public class LockedState : State
@@ -12,7 +14,7 @@ namespace MusicPlayer.API
             
         }
 
-        public override void Play()
+        public override void Play(Song song)
         {
             
         }

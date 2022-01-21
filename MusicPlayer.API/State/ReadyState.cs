@@ -1,3 +1,5 @@
+using MusicPlayer.API.Core;
+
 namespace MusicPlayer.API
 {
     public class ReadyState : State
@@ -13,9 +15,9 @@ namespace MusicPlayer.API
             throw new NotImplementedException();
         }
 
-        public override void Play()
+        public override void Play(Song song)
         {
-            _player.StartPlayback();
+            _player.StartPlayback(song);
             _player.ChangeState(new PlayingState(_player));
         }
 

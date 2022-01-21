@@ -396,3 +396,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+.vscode
+.idea
+
+test.json
+test.flac
+test.xml

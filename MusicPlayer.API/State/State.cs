@@ -1,3 +1,5 @@
+using MusicPlayer.API.Core;
+
 namespace MusicPlayer.API
 {
     public abstract class State
@@ -9,7 +11,7 @@ namespace MusicPlayer.API
             _player = player;
         }
 
-        public abstract void Play();
+        public abstract void Play(Song song);
         public abstract void NextSong();
         public abstract void PreviousSong();
         public abstract void Unlock();
