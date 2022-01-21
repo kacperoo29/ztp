@@ -6,6 +6,7 @@ namespace MusicPlayer.API
 {
     public class MusicPlayer : IDisposable
     {
+        // TODO: Replace C# events with Observer pattern?
         public event EventHandler? MusicPlaybackEvent;
 
         public State State { get; private set; }
@@ -29,6 +30,7 @@ namespace MusicPlayer.API
             State = state;
         }
 
+        // TODO: Command pattern?
         public void Play(Song song)
         {
             State.Play(song);
