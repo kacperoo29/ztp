@@ -7,28 +7,36 @@ namespace MusicPlayer.API
         public PlayingState(MusicPlayer player)
             : base(player)
         {
-            
+
         }
 
         public override void NextSong()
         {
-            throw new NotImplementedException();
+            var song = _player.Iterator?.GetNext();
+            if (song != null) 
+            {
+                _player.Play(song);
+            }
         }
 
         public override void Play(Song song)
         {
-            _player.StopPlayback();
+            _player.PausePlayback();
             _player.ChangeState(new ReadyState(_player));
         }
 
         public override void PreviousSong()
         {
-            throw new NotImplementedException();
+            var song = _player.Iterator?.GetPrevious();
+            if (song != null) 
+            {
+                _player.Play(song);
+            }
         }
 
         public override void Unlock()
         {
-            
+
         }
     }
 }

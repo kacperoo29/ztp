@@ -12,7 +12,7 @@ namespace MusicPlayer.API
 
         public override void NextSong()
         {
-            throw new NotImplementedException();
+            _player.Iterator?.GetNext();
         }
 
         public override void Play(Song song)
@@ -23,7 +23,7 @@ namespace MusicPlayer.API
 
         public override void PreviousSong()
         {
-            throw new NotImplementedException();
+            _player.Iterator?.GetPrevious();
         }
 
         public override void Unlock()

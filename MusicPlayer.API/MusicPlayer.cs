@@ -6,7 +6,7 @@ namespace MusicPlayer.API
 {
     public class MusicPlayer : IDisposable
     {
-        public event EventHandler MusicPlaybackEvent;
+        public event EventHandler? MusicPlaybackEvent;
 
         public State State { get; private set; }
         public IPlaylist? Playlist { get; private set; }
@@ -32,6 +32,16 @@ namespace MusicPlayer.API
         public void Play(Song song)
         {
             State.Play(song);
+        }
+
+        public void Stop()
+        {
+
+        }
+
+        public void Pause()
+        {
+
         }
 
         public void NextSong()
@@ -78,24 +88,38 @@ namespace MusicPlayer.API
             }
         }
 
-        public void StartPlayback(Song song)
+        internal void StartPlayback(Song? song)
         {
+            if (song == null)
+            {
+                if (Iterator == null)
+                    throw new InvalidOperationException();
+
+                song = Iterator.GetCurrent();
+            }
+
             using var media = new Media(_libVLC, song.Path ?? throw new InvalidDataException());
             _mediaPlayer = new MediaPlayer(media);
             _mediaPlayer.Play();
-            while (_mediaPlayer.State != VLCState.Ended)
+            
+            _mediaPlayer.TimeChanged += delegate
             {
                 MusicPlaybackEvent?.Invoke(this, new MediaPlaybackEventArgs()
                 {
                     Time = _mediaPlayer.Time,
                     Length = _mediaPlayer.Length
                 });
-            }
+            };
         }
 
-        public void StopPlayback()
+        internal void StopPlayback()
         {
             _mediaPlayer?.Stop();
+        }
+
+        internal void PausePlayback()
+        {
+            _mediaPlayer?.Pause();
         }
 
         public void Dispose()
