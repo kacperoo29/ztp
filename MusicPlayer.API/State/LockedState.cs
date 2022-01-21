@@ -1,32 +1,30 @@
 namespace MusicPlayer.API
 {
-    public class PlayingState : State
+    public class LockedState : State
     {
-        public PlayingState(MusicPlayer player)
+        public LockedState(MusicPlayer player)
             : base(player)
         {
-            
         }
 
         public override void NextSong()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Play()
         {
-            _player.StopPlayback();
-            _player.ChangeState(new ReadyState(_player));
+            
         }
 
         public override void PreviousSong()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Unlock()
         {
-            
+            _player.ChangeState(new ReadyState(_player));
         }
     }
 }

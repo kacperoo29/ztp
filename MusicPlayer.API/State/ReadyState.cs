@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
-
 namespace MusicPlayer.API
 {
     public class ReadyState : State
@@ -25,6 +22,11 @@ namespace MusicPlayer.API
         public override void PreviousSong()
         {
             throw new NotImplementedException();
+        }
+
+        public override void Unlock()
+        {
+            
         }
     }
 }

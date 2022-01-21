@@ -12,5 +12,6 @@ namespace MusicPlayer.API
         public abstract void Play();
         public abstract void NextSong();
         public abstract void PreviousSong();
+        public abstract void Unlock();
     }
 }

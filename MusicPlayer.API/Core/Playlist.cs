@@ -4,19 +4,18 @@ namespace MusicPlayer.API.Core
 {
     public abstract class Playlist : IPlaylist
     {
-        public abstract ICollection<Song> Songs { get; protected set; }
+        public abstract List<Song> Songs { get; protected set; }
 
-        public IIterator CreateIterator(IteratorType type)
+        public IIterator CreateIterator(IteratorType type) => type switch
         {
-            switch(type)
-            {
-                case IteratorType.Ordered:
-                    return new NormalIterator(Songs);
-                case IteratorType.Shuffle:
-                    return new ShuffleIterator(Songs);
-            }
+            IteratorType.Ordered => new NormalIterator(Songs),
+            IteratorType.Shuffle => new ShuffleIterator(Songs),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
 
-            return null;
+        public void SaveToFile(string path)
+        {
+
         }
     }
 }

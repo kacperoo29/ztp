@@ -2,8 +2,10 @@ using System.Collections.Generic;
 
 namespace MusicPlayer.API.Core
 {
-    public interface IIterator : IEnumerable<Song>
+    public interface IIterator
     {
-        
+        Song GetNext();
+        Song GetCurrent();
+        Song GetPrevious();
     }
 }

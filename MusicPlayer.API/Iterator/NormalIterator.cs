@@ -6,23 +6,33 @@ namespace MusicPlayer.API.Iterator
 {
     public class NormalIterator : IIterator
     {
-        public ICollection<Song> Songs { get; private set; }
+        public List<Song> Songs { get; private set; }
         private int _idx = 0;
 
-        public NormalIterator(ICollection<Song> songs)
+        public NormalIterator(List<Song> songs)
         {
             Songs = songs;
         }
 
-        public IEnumerator<Song> GetEnumerator()
+        public Song GetNext()
         {
-            foreach (var song in Songs)
-                yield return song;
+            if (_idx == Songs.Count - 1)
+                _idx = -1;
+
+            return Songs[++_idx];
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public Song GetCurrent()
         {
-            return (IEnumerator)GetEnumerator();
+            return Songs[_idx];
+        }
+
+        public Song GetPrevious()
+        {
+            if (_idx == 0)
+                _idx = Songs.Count;
+                
+            return Songs[--_idx];
         }
     }
 }
