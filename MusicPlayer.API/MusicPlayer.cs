@@ -6,6 +6,8 @@ namespace MusicPlayer.API
 {
     public class MusicPlayer : IDisposable
     {
+        public event EventHandler MusicPlaybackEvent;
+
         public State State { get; private set; }
         public IPlaylist? Playlist { get; private set; }
         public IIterator? Iterator { get; private set; }
@@ -81,6 +83,14 @@ namespace MusicPlayer.API
             using var media = new Media(_libVLC, song.Path ?? throw new InvalidDataException());
             _mediaPlayer = new MediaPlayer(media);
             _mediaPlayer.Play();
+            while (_mediaPlayer.State != VLCState.Ended)
+            {
+                MusicPlaybackEvent?.Invoke(this, new MediaPlaybackEventArgs()
+                {
+                    Time = _mediaPlayer.Time,
+                    Length = _mediaPlayer.Length
+                });
+            }
         }
 
         public void StopPlayback()
