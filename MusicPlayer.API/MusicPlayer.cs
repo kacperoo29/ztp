@@ -44,6 +44,11 @@ namespace MusicPlayer.API
 
         }
 
+        public void Seek(long time)
+        {
+            State.Seek(time);
+        }
+
         public void NextSong()
         {
             State.NextSong();
@@ -88,6 +93,8 @@ namespace MusicPlayer.API
             }
         }
 
+
+        // TODO: Move internal functions to another class and make MusicPlayer more facade-like
         internal void StartPlayback(Song? song)
         {
             if (song == null)
@@ -101,7 +108,7 @@ namespace MusicPlayer.API
             using var media = new Media(_libVLC, song.Path ?? throw new InvalidDataException());
             _mediaPlayer = new MediaPlayer(media);
             _mediaPlayer.Play();
-            
+
             _mediaPlayer.TimeChanged += delegate
             {
                 MusicPlaybackEvent?.Invoke(this, new MediaPlaybackEventArgs()
@@ -120,6 +127,12 @@ namespace MusicPlayer.API
         internal void PausePlayback()
         {
             _mediaPlayer?.Pause();
+        }
+
+        internal void SeekImpl(long time)
+        {
+            if (_mediaPlayer != null)
+                _mediaPlayer.Time = time;
         }
 
         public void Dispose()

@@ -34,6 +34,11 @@ namespace MusicPlayer.API
             }
         }
 
+        public override void Seek(long time)
+        {
+            _player.SeekImpl(time);
+        }
+
         public override void Unlock()
         {
 

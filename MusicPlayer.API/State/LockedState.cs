@@ -24,6 +24,11 @@ namespace MusicPlayer.API
             
         }
 
+        public override void Seek(long time)
+        {
+            
+        }
+
         public override void Unlock()
         {
             _player.ChangeState(new ReadyState(_player));

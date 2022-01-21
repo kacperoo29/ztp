@@ -10,5 +10,6 @@ musicPlayer.MusicPlaybackEvent += delegate(object? sender, EventArgs eventArgs)
 };
 
 musicPlayer.Play(musicPlayer.Playlist?.Songs[0] ?? throw new InvalidDataException());
+musicPlayer.Seek(40000);
 
 Console.ReadKey();

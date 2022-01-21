@@ -26,6 +26,11 @@ namespace MusicPlayer.API
             _player.Iterator?.GetPrevious();
         }
 
+        public override void Seek(long time)
+        {
+            
+        }
+
         public override void Unlock()
         {
             
