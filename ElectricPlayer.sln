@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectricPlayer.API", "ElectricPlayer.API\ElectricPlayer.API.csproj", "{460C5445-EAB3-481F-82F0-AEC2B9F25236}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectricPlayer.Player", "ElectricPlayer.Player\ElectricPlayer.Player.csproj", "{E43B1507-E6D2-494E-A18F-C142B9C15E0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{460C5445-EAB3-481F-82F0-AEC2B9F25236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{460C5445-EAB3-481F-82F0-AEC2B9F25236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{460C5445-EAB3-481F-82F0-AEC2B9F25236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{460C5445-EAB3-481F-82F0-AEC2B9F25236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E43B1507-E6D2-494E-A18F-C142B9C15E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E43B1507-E6D2-494E-A18F-C142B9C15E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E43B1507-E6D2-494E-A18F-C142B9C15E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E43B1507-E6D2-494E-A18F-C142B9C15E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
