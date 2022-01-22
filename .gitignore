@@ -403,3 +403,4 @@ FodyWeavers.xsd
 test.json
 test.flac
 test.xml
+*.flac
