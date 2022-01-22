@@ -9,6 +9,7 @@ using Avalonia.Media.Imaging;
 using ElectricPlayer.API.Playlist;
 using LibVLCSharp.Shared;
 using ElectricPlayer.API;
+using ElectricPlayer.API.Commands;
 using ElectricPlayer.API.Core;
 using ElectricPlayer.API.Eventing;
 using ElectricPlayer.API.Events;
@@ -25,7 +26,6 @@ namespace ElectricPlayer.Player.ViewModels
         public ReactiveCommand<Unit, Unit> OnClickCommand { get; }
         public ReactiveCommand<Unit, Unit> OnNextSong { get; }
         public ReactiveCommand<Unit, Unit> OnSaveToJson { get; }
-        public ReactiveCommand<Unit, Unit> OnAddToPlaylist { get; }
 
         private Bitmap? _cover;
 
@@ -52,11 +52,14 @@ namespace ElectricPlayer.Player.ViewModels
             MusicPlayer.PlaybackStateChanged.Attach(this);
             RefreshData();
 
-            OnClickCommand = ReactiveCommand.Create(() => { MusicPlayer.Play(null); });
+            OnClickCommand = ReactiveCommand.Create(() =>
+            {
+                MusicPlayer.ExecuteCommand(new PlayCommand(MusicPlayer, null));
+            });
 
             OnNextSong = ReactiveCommand.Create(() =>
             {
-                MusicPlayer.NextSong();
+                MusicPlayer.ExecuteCommand(new NextCommand(MusicPlayer));
                 RefreshData();
             });
 
@@ -70,10 +73,10 @@ namespace ElectricPlayer.Player.ViewModels
         {
             foreach (var result in results)
                 MusicPlayer.AddSong(new Song(result));
-            
+
             RefreshData();
         }
-                
+
         public async Task LoadCover(Stream stream)
         {
             await using (var imageStream = stream)
@@ -94,8 +97,12 @@ namespace ElectricPlayer.Player.ViewModels
 
         public void Update(Subject subject)
         {
-            var sub = subject as PlaybackStateChanged;
-            Console.WriteLine($"{sub?.Time}");
+            switch (subject)
+            {
+                case PlaybackStateChanged e:
+                    Console.WriteLine($"{e.Time}");
+                    break;
+            }
         }
     }
 }

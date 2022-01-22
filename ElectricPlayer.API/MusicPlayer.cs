@@ -33,33 +33,13 @@ namespace ElectricPlayer.API
             State = state;
         }
 
-        // TODO: Command pattern?
-        public void Play(Song? song)
+        public void ExecuteCommand(ICommand command)
         {
-            State.Play(song);
-        }
-
-        public void Stop()
-        {
+            command.Execute();
         }
 
         public void Pause()
         {
-        }
-
-        public void Seek(long time)
-        {
-            State.Seek(time);
-        }
-
-        public void NextSong()
-        {
-            State.NextSong();
-        }
-
-        public void PreviousSong()
-        {
-            State.PreviousSong();
         }
 
         public void LoadPlaylist(IPlaylist playlist)
