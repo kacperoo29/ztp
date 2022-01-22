@@ -6,6 +6,5 @@ namespace ElectricPlayer.API.Core
     {
         List<Song> Songs { get; }
         IIterator CreateIterator(IteratorType type);
-        void SaveToFile(string path);
     }
 }

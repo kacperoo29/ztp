@@ -11,7 +11,7 @@ namespace ElectricPlayer.API.State
             _player = player;
         }
 
-        public abstract void Play(Song song);
+        public abstract void Play(Song? song);
         public abstract void NextSong();
         public abstract void PreviousSong();
         public abstract void Unlock();

@@ -5,10 +5,15 @@ namespace ElectricPlayer.API.Core
 {
     public class Song
     {
-        public string? Path { get; set; }
+        public string Path { get; set; }
         
         [JsonIgnore]
         [XmlIgnore]
         public Metadata? Metadata { get; set; }
+
+        public Song(string path)
+        {
+            Path = path;
+        }
     }
 }

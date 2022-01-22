@@ -14,7 +14,7 @@ namespace ElectricPlayer.API.State
             
         }
 
-        public override void Play(Song song)
+        public override void Play(Song? song)
         {
             
         }

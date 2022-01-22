@@ -22,18 +22,25 @@ namespace ElectricPlayer.API.IO
             WriteToFile(path, data);
         }
 
-        private void PopulateMetadata(ref List<Song> songs)
+        public static Song PopulateMetadata(Song song)
         {
-            foreach (var song in songs)
+            var file = TagLib.File.Create(song.Path);
+
+            song.Metadata  = new Metadata
             {
-                var file = TagLib.File.Create(song.Path);
-
-                var metadata = new Metadata();
-                metadata.Artwork = file.Tag.Pictures[0].Data.Data;
-                metadata.Title = file.Tag.Title;
                 // TODO: Pull other metadata
+                Artwork = file.Tag.Pictures[0].Data.Data,
+                Title = file.Tag.Title
+            };
 
-                song.Metadata = metadata;
+            return song;
+        }
+
+        private static void PopulateMetadata(ref List<Song> songs)
+        {
+            for (int i = 0; i < songs.Count; ++i)
+            {
+                songs[i] = PopulateMetadata(songs[i]);
             }
         }
 

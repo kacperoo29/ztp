@@ -2,9 +2,9 @@ using ElectricPlayer.API.Iterator;
 
 namespace ElectricPlayer.API.Core
 {
-    public abstract class Playlist : IPlaylist
+    public class Playlist : IPlaylist
     {
-        public abstract List<Song> Songs { get; protected set; }
+        public List<Song> Songs { get; protected set; }
 
         public IIterator CreateIterator(IteratorType type) => type switch
         {
@@ -13,9 +13,9 @@ namespace ElectricPlayer.API.Core
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        public void SaveToFile(string path)
+        public Playlist()
         {
-
+            Songs = new List<Song>();
         }
     }
 }

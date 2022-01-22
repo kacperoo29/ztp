@@ -11,7 +11,7 @@ namespace ElectricPlayer.API
         public event EventHandler<MediaPlaybackEventArgs>? MusicPlaybackEvent;
 
         public AbstractState State { get; private set; }
-        public IPlaylist? Playlist { get; private set; }
+        public IPlaylist Playlist { get; private set; }
         public IIterator? Iterator { get; private set; }
 
         private IteratorType _currentIterator;
@@ -22,6 +22,7 @@ namespace ElectricPlayer.API
         {
             State = new LockedState(this);
             _currentIterator = IteratorType.Ordered;
+            Playlist = new Core.Playlist();
 
             LibVLCSharp.Shared.Core.Initialize();
         }
@@ -32,19 +33,17 @@ namespace ElectricPlayer.API
         }
 
         // TODO: Command pattern?
-        public void Play(Song song)
+        public void Play(Song? song)
         {
             State.Play(song);
         }
 
         public void Stop()
         {
-
         }
 
         public void Pause()
         {
-
         }
 
         public void Seek(long time)
@@ -70,6 +69,13 @@ namespace ElectricPlayer.API
             State.Unlock();
         }
 
+        public void AddSong(Song song)
+        {
+            song = PlaylistIO.PopulateMetadata(song);
+            Playlist.Songs.Add(song);
+            Iterator = Playlist.CreateIterator(_currentIterator);
+        }
+
         public void ToggleShuffle()
         {
             _currentIterator = _currentIterator == IteratorType.Shuffle
@@ -80,27 +86,21 @@ namespace ElectricPlayer.API
 
         public void SavePlaylistToJson(string path)
         {
-            if (Playlist != null)
-            {
-                var io = new JSONPlaylistIO();
-                io.Export(Playlist, path);
-            }
+            var io = new JSONPlaylistIO();
+            io.Export(Playlist, path);
         }
 
         public void SavePlaylistToXML(string path)
         {
-            if (Playlist != null)
-            {
-                var io = new XMLPlaylistIO();
-                io.Export(Playlist, path);
-            }
+            var io = new XMLPlaylistIO();
+            io.Export(Playlist, path);
         }
 
         // TODO: Move internal functions to another class and make MusicPlayer more facade-like
         internal void StartPlayback(Song? song)
         {
             _mediaPlayer?.Dispose();
-            
+
             if (song == null)
             {
                 if (Iterator == null)

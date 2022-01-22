@@ -19,7 +19,7 @@ namespace ElectricPlayer.API.State
             }
         }
 
-        public override void Play(Song song)
+        public override void Play(Song? song)
         {
             _player.PausePlayback();
             _player.ChangeState(new PausedState(_player));

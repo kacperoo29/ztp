@@ -16,7 +16,7 @@ namespace ElectricPlayer.API.State
             _player.Iterator?.GetNext();
         }
 
-        public override void Play(Song song)
+        public override void Play(Song? song)
         {
             _player.ResumePlayback();
             _player.ChangeState(new PlayingState(_player));

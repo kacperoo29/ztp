@@ -5,8 +5,6 @@ namespace ElectricPlayer.API.Playlist
 {
     public class XMLPlaylist : Core.Playlist
     {
-        public override List<Song> Songs { get; protected set; }
-
         public XMLPlaylist(string path)
         {
             var io = new XMLPlaylistIO();
