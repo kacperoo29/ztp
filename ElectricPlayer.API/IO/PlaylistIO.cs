@@ -30,7 +30,9 @@ namespace ElectricPlayer.API.IO
             {
                 // TODO: Pull other metadata
                 Artwork = file.Tag.Pictures[0].Data.Data,
-                Title = file.Tag.Title
+                Title = file.Tag.Title,
+                Album = file.Tag.Album,
+                Artists = file.Tag.Performers
             };
 
             return song;

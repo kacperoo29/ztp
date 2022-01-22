@@ -26,7 +26,7 @@ namespace ElectricPlayer.Player.Views
             var dialog = new OpenFileDialog();
             dialog.Filters.Add(new FileDialogFilter() {Name = "Audio files", Extensions = {"mp3", "flac", "m4a"}});
             var result = await dialog.ShowAsync(this);
-            
+
             if (result != null)
             {
                 var context = this.DataContext as MainWindowViewModel;

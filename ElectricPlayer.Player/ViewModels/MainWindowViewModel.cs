@@ -19,9 +19,8 @@ using ReactiveUI;
 namespace ElectricPlayer.Player.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, IObserver
-    {
-        // TODO: Change namespace
-        public API.MusicPlayer MusicPlayer { get; private set; }
+    {        
+        public MusicPlayer MusicPlayer { get; private set; }
 
         public ReactiveCommand<Unit, Unit> OnClickCommand { get; }
         public ReactiveCommand<Unit, Unit> OnNextSong { get; }

@@ -9,10 +9,9 @@ namespace ElectricPlayer.API
     public class MusicPlayer : IDisposable
     {
         public PlaybackStateChanged PlaybackStateChanged { get; private set; }
-        
         public AbstractState State { get; private set; }
         public IPlaylist Playlist { get; private set; }
-        public IIterator? Iterator { get; private set; }
+        public IIterator Iterator { get; private set; }
 
         private IteratorType _currentIterator;
         private LibVLC _libVLC = new LibVLC();
@@ -23,6 +22,7 @@ namespace ElectricPlayer.API
             State = new LockedState(this);
             _currentIterator = IteratorType.Ordered;
             Playlist = new Core.Playlist();
+            Iterator = Playlist.CreateIterator(_currentIterator);
             PlaybackStateChanged = new();
 
             LibVLCSharp.Shared.Core.Initialize();
@@ -36,10 +36,6 @@ namespace ElectricPlayer.API
         public void ExecuteCommand(ICommand command)
         {
             command.Execute();
-        }
-
-        public void Pause()
-        {
         }
 
         public void LoadPlaylist(IPlaylist playlist)
@@ -62,7 +58,7 @@ namespace ElectricPlayer.API
             _currentIterator = _currentIterator == IteratorType.Shuffle
                 ? IteratorType.Ordered
                 : IteratorType.Shuffle;
-            Iterator = Playlist?.CreateIterator(_currentIterator);
+            Iterator = Playlist.CreateIterator(_currentIterator);
         }
 
         public void SavePlaylistToJson(string path)
