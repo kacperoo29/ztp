@@ -1,3 +1,4 @@
+using System.Linq;
 using LibVLCSharp.Shared;
 using MusicPlayer.API.Core;
 
@@ -25,11 +26,12 @@ namespace MusicPlayer.API.IO
         {
             foreach (var song in songs)
             {
-                var media = new Media(new LibVLC(), song.Path ?? throw new InvalidDataException());
-                var metadata = new Metadata();
+                var file = TagLib.File.Create(song.Path);
 
-                metadata.Title = media.Meta(MetadataType.Title);
-                // TODO: Extract more metadata, plus artwork
+                var metadata = new Metadata();
+                metadata.Artwork = file.Tag.Pictures[0].Data.Data;
+                metadata.Title = file.Tag.Title;
+                // TODO: Pull other metadata
 
                 song.Metadata = metadata;
             }

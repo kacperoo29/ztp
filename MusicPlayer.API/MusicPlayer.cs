@@ -95,7 +95,6 @@ namespace MusicPlayer.API
             }
         }
 
-
         // TODO: Move internal functions to another class and make MusicPlayer more facade-like
         internal void StartPlayback(Song? song)
         {

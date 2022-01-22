@@ -1,15 +1,24 @@
-﻿using MusicPlayer.API;
+﻿using System;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.ReactiveUI;
 
-var musicPlayer = new MusicPlayer.API.MusicPlayer();
-musicPlayer.LoadPlaylist(new JSONPlaylist(@"/home/kacper/repos/ztp/test.json"));
-musicPlayer.MusicPlaybackEvent += delegate(object? sender, EventArgs eventArgs)
+namespace MusicPlayer.Player
 {
-    var args = eventArgs as MediaPlaybackEventArgs;
-    if (args != null)
-    Console.WriteLine($"Length {args.Length}, time {args.Time}");
-};
+    class Program
+    {
+        // Initialization code. Don't use any Avalonia, third-party APIs or any
+        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+        // yet and stuff might break.
+        [STAThread]
+        public static void Main(string[] args) => BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
 
-musicPlayer.Play(musicPlayer.Playlist?.Songs[0] ?? throw new InvalidDataException());
-musicPlayer.Seek(40000);
-
-Console.ReadKey();
+        // Avalonia configuration, don't remove; also used by visual designer.
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .LogToTrace()
+                .UseReactiveUI();
+    }
+}
