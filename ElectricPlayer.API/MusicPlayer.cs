@@ -10,12 +10,13 @@ namespace ElectricPlayer.API
     {
         public PlaybackStateChanged PlaybackStateChanged { get; private set; }
         public AbstractState State { get; private set; }
-        public IPlaylist Playlist { get; private set; }
+        public IPlaylist Playlist { get; internal set; }
         public IIterator Iterator { get; private set; }
 
-        private IteratorType _currentIterator;
+        internal IteratorType _currentIterator;
         private LibVLC _libVLC = new LibVLC();
         private MediaPlayer? _mediaPlayer;
+        private Stack<ICommand> _commandHistory;
 
         public MusicPlayer()
         {
@@ -24,10 +25,10 @@ namespace ElectricPlayer.API
             Playlist = new Core.Playlist();
             Iterator = Playlist.CreateIterator(_currentIterator);
             PlaybackStateChanged = new();
+            _commandHistory = new();
 
             LibVLCSharp.Shared.Core.Initialize();
         }
-
         public void ChangeState(AbstractState state)
         {
             State = state;
@@ -36,41 +37,13 @@ namespace ElectricPlayer.API
         public void ExecuteCommand(ICommand command)
         {
             command.Execute();
+            // TODO: Optional undo last command
+            _commandHistory.Push(command);
         }
 
-        public void LoadPlaylist(IPlaylist playlist)
+        internal void CreateIterator()
         {
-            Playlist = playlist;
             Iterator = Playlist.CreateIterator(_currentIterator);
-
-            State.Unlock();
-        }
-
-        public void AddSong(Song song)
-        {
-            song = PlaylistIO.PopulateMetadata(song);
-            Playlist.Songs.Add(song);
-            Iterator = Playlist.CreateIterator(_currentIterator);
-        }
-
-        public void ToggleShuffle()
-        {
-            _currentIterator = _currentIterator == IteratorType.Shuffle
-                ? IteratorType.Ordered
-                : IteratorType.Shuffle;
-            Iterator = Playlist.CreateIterator(_currentIterator);
-        }
-
-        public void SavePlaylistToJson(string path)
-        {
-            var io = new JSONPlaylistIO();
-            io.Export(Playlist, path);
-        }
-
-        public void SavePlaylistToXML(string path)
-        {
-            var io = new XMLPlaylistIO();
-            io.Export(Playlist, path);
         }
 
         // TODO: Move internal functions to another class and make MusicPlayer more facade-like

@@ -6,20 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
-using ElectricPlayer.API.Playlist;
-using LibVLCSharp.Shared;
 using ElectricPlayer.API;
 using ElectricPlayer.API.Commands;
 using ElectricPlayer.API.Core;
 using ElectricPlayer.API.Eventing;
 using ElectricPlayer.API.Events;
+using ElectricPlayer.API.Playlist;
 using ElectricPlayer.API.State;
+using LibVLCSharp.Shared;
 using ReactiveUI;
 
 namespace ElectricPlayer.Player.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, IObserver
-    {        
+    {
         public MusicPlayer MusicPlayer { get; private set; }
 
         public ReactiveCommand<Unit, Unit> OnClickCommand { get; }
@@ -46,7 +46,12 @@ namespace ElectricPlayer.Player.ViewModels
         {
             MusicPlayer = new API.MusicPlayer();
             // TODO: Select file from disc, decide if xml or json
-            MusicPlayer.LoadPlaylist(new JSONPlaylist(@"/home/kacper/repos/ztp/test.json"));
+            MusicPlayer.ExecuteCommand(
+                new LoadPlaylistCommand(
+                    MusicPlayer,
+                    new JSONPlaylist(@"/home/kacper/repos/ztp/test.json"))
+                );
+
             MusicPlayer.ChangeState(new ReadyState(MusicPlayer));
             MusicPlayer.PlaybackStateChanged.Attach(this);
             RefreshData();
@@ -64,14 +69,18 @@ namespace ElectricPlayer.Player.ViewModels
 
             OnSaveToJson = ReactiveCommand.Create(() =>
             {
-                MusicPlayer.SavePlaylistToJson("/home/kacper/repos/ztp/new.json");
+                MusicPlayer.ExecuteCommand(
+                    new SavePlaylistCommand(MusicPlayer,
+                    PlaylistFormat.JSON,
+                    "/home/kacper/repos/ztp/new.json")
+                );
             });
         }
 
         public void AddToPlaylist(string[] results)
         {
             foreach (var result in results)
-                MusicPlayer.AddSong(new Song(result));
+                MusicPlayer.ExecuteCommand(new AddSongCommand(MusicPlayer, new Song(result)));
 
             RefreshData();
         }
