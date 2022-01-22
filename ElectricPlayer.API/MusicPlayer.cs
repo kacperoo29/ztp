@@ -1,4 +1,5 @@
 using ElectricPlayer.API.Core;
+using ElectricPlayer.API.Events;
 using ElectricPlayer.API.IO;
 using ElectricPlayer.API.State;
 using LibVLCSharp.Shared;
@@ -7,9 +8,8 @@ namespace ElectricPlayer.API
 {
     public class MusicPlayer : IDisposable
     {
-        // TODO: Replace C# events with Observer pattern?
-        public event EventHandler<MediaPlaybackEventArgs>? MusicPlaybackEvent;
-
+        public PlaybackStateChanged PlaybackStateChanged { get; private set; }
+        
         public AbstractState State { get; private set; }
         public IPlaylist Playlist { get; private set; }
         public IIterator? Iterator { get; private set; }
@@ -23,6 +23,7 @@ namespace ElectricPlayer.API
             State = new LockedState(this);
             _currentIterator = IteratorType.Ordered;
             Playlist = new Core.Playlist();
+            PlaybackStateChanged = new();
 
             LibVLCSharp.Shared.Core.Initialize();
         }
@@ -115,11 +116,9 @@ namespace ElectricPlayer.API
 
             _mediaPlayer.TimeChanged += delegate
             {
-                MusicPlaybackEvent?.Invoke(this, new MediaPlaybackEventArgs()
-                {
-                    Time = _mediaPlayer.Time,
-                    Length = _mediaPlayer.Length
-                });
+                PlaybackStateChanged.Length = _mediaPlayer.Length;
+                PlaybackStateChanged.Time = _mediaPlayer.Time;
+                PlaybackStateChanged.Notify();
             };
         }
 

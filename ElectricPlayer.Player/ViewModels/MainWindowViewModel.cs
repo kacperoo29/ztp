@@ -10,12 +10,14 @@ using ElectricPlayer.API.Playlist;
 using LibVLCSharp.Shared;
 using ElectricPlayer.API;
 using ElectricPlayer.API.Core;
+using ElectricPlayer.API.Eventing;
+using ElectricPlayer.API.Events;
 using ElectricPlayer.API.State;
 using ReactiveUI;
 
 namespace ElectricPlayer.Player.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase, IObserver
     {
         // TODO: Change namespace
         public API.MusicPlayer MusicPlayer { get; private set; }
@@ -45,8 +47,9 @@ namespace ElectricPlayer.Player.ViewModels
         {
             MusicPlayer = new API.MusicPlayer();
             // TODO: Select file from disc, decide if xml or json
-            MusicPlayer.LoadPlaylist(new JSONPlaylist(@"/home/kacper/repos/ztp/new.json"));
+            MusicPlayer.LoadPlaylist(new JSONPlaylist(@"/home/kacper/repos/ztp/test.json"));
             MusicPlayer.ChangeState(new ReadyState(MusicPlayer));
+            MusicPlayer.PlaybackStateChanged.Attach(this);
             RefreshData();
 
             OnClickCommand = ReactiveCommand.Create(() => { MusicPlayer.Play(null); });
@@ -87,6 +90,12 @@ namespace ElectricPlayer.Player.ViewModels
                 Cover = new Bitmap(new MemoryStream(current.Metadata.Artwork));
                 Title = current.Metadata.Title;
             }
+        }
+
+        public void Update(Subject subject)
+        {
+            var sub = subject as PlaybackStateChanged;
+            Console.WriteLine($"{sub?.Time}");
         }
     }
 }
