@@ -15,7 +15,7 @@
             </Style>
         </Panel.Styles>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <ToggleButton Name="ShuffleButton" Width="36" Height="36">
+            <ToggleButton Name="ShuffleButton" Width="36" Height="36" Command="{Binding ToggleShuffleCommand}">
                 <Image Width="20" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Image.Source>
                         <DrawingImage Drawing="{DynamicResource Shuffle}"></DrawingImage>

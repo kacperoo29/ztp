@@ -14,10 +14,12 @@ public class ToggleShuffleCommand : ICommand
     {
         if (sender is MusicPlayer player)
         {
+            var idx = player.Iterator.Idx;
             player._currentIterator = player._currentIterator == IteratorType.Shuffle
                 ? IteratorType.Ordered
                 : IteratorType.Shuffle;
             player.CreateIterator();
+            player.Iterator.SetCurrent(idx);
         }
     }
 }

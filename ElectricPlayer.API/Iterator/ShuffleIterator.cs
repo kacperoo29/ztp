@@ -7,6 +7,10 @@ namespace ElectricPlayer.API.Iterator
     public class ShuffleIterator : IIterator
     {
         private List<int> _indices;
+        public int Idx
+        {
+            get => _idx;
+        }
         private int _idx = 0;
         public List<Song> Songs { get; private set; }
 

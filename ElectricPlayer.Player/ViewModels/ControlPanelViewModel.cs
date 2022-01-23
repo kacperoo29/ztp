@@ -14,6 +14,7 @@ public class ControlPanelViewModel : ViewModelBase, IObserver
     public ReactiveCommand<Unit, Unit> PlayCommand { get; }
     public ReactiveCommand<Unit, Unit> BackCommand { get; }
     public ReactiveCommand<Unit, Unit> ForwardCommand { get; }
+    public ReactiveCommand<Unit, Unit> ToggleShuffleCommand { get; }
 
     private bool _isPlaying;
 
@@ -34,6 +35,8 @@ public class ControlPanelViewModel : ViewModelBase, IObserver
         BackCommand = ReactiveCommand.Create(() => { _musicPlayer.ExecuteCommand(new PreviousCommand()); });
 
         ForwardCommand = ReactiveCommand.Create(() => { _musicPlayer.ExecuteCommand(new NextCommand()); });
+
+        ToggleShuffleCommand = ReactiveCommand.Create(() => _musicPlayer.ExecuteCommand(new ToggleShuffleCommand()));
     }
 
     public void Update(Subject subject)

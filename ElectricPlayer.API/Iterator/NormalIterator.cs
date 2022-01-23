@@ -7,6 +7,12 @@ namespace ElectricPlayer.API.Iterator
     public class NormalIterator : IIterator
     {
         public List<Song> Songs { get; private set; }
+
+        public int Idx
+        {
+            get => _idx;
+        }
+
         private int _idx = 0;
 
         public NormalIterator(List<Song> songs)
@@ -31,7 +37,7 @@ namespace ElectricPlayer.API.Iterator
         {
             if (_idx == 0)
                 _idx = Songs.Count;
-                
+
             return Songs[--_idx];
         }
 
