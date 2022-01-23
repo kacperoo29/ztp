@@ -5,6 +5,5 @@ namespace ElectricPlayer.API.Core
         public string? Title { get; set; }
         public string[]? Artists { get; set; }
         public string? Album { get; set; }
-        public byte[]? Artwork { get; set; }
     }
 }

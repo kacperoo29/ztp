@@ -13,6 +13,7 @@ using ElectricPlayer.API.Core;
 using ElectricPlayer.API.Eventing;
 using ElectricPlayer.API.Events;
 using ElectricPlayer.API.Playlist;
+using ElectricPlayer.API.Service;
 using ElectricPlayer.API.State;
 using LibVLCSharp.Shared;
 using ReactiveUI;
@@ -22,9 +23,9 @@ namespace ElectricPlayer.Player.ViewModels
     public class MainWindowViewModel : ViewModelBase, IObserver
     {
         public MusicPlayer MusicPlayer { get; private set; }
+        private ICoverService _coverService;
 
         private Bitmap? _cover;
-
         public Bitmap? Cover
         {
             get => _cover;
@@ -32,7 +33,6 @@ namespace ElectricPlayer.Player.ViewModels
         }
 
         private IEnumerable<string> _songs;
-
         public IEnumerable<string> Songs
         {
             get => _songs;
@@ -40,7 +40,6 @@ namespace ElectricPlayer.Player.ViewModels
         }
 
         private StatusBarViewModel _trackStatus;
-
         public StatusBarViewModel TrackStatus
         {
             get => _trackStatus;
@@ -56,7 +55,6 @@ namespace ElectricPlayer.Player.ViewModels
         }
 
         private int _selectedIndex;
-
         public int SelectedIndex
         {
             get => _selectedIndex;
@@ -80,6 +78,8 @@ namespace ElectricPlayer.Player.ViewModels
             MusicPlayer.SongChanged.Attach(this);
             MusicPlayer.PlaylistChanged.Attach(this);
 
+            _coverService = new CachedCoverService();
+            
             this.WhenAnyValue(x => x.SelectedIndex)
                 .Subscribe(x =>
                 {
@@ -91,9 +91,10 @@ namespace ElectricPlayer.Player.ViewModels
         private void RefreshData()
         {
             var current = MusicPlayer.Iterator?.GetCurrent();
-            if (current?.Metadata?.Artwork != null)
+            if (current != null)
             {
-                Cover = new Bitmap(new MemoryStream(current.Metadata.Artwork));
+                var coverData = _coverService.GetCover(current);
+                Cover = new Bitmap(new MemoryStream(coverData));
                 Title = current.Metadata.Title;
             }
         }

@@ -29,7 +29,6 @@ namespace ElectricPlayer.API.IO
             song.Metadata  = new Metadata
             {
                 // TODO: Pull other metadata
-                Artwork = file.Tag.Pictures[0].Data.Data,
                 Title = file.Tag.Title,
                 Album = file.Tag.Album,
                 Artists = file.Tag.Performers
