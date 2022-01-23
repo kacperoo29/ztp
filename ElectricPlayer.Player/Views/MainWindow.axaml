@@ -42,7 +42,15 @@
             </ExperimentalAcrylicBorder>
             <DockPanel>
                 <Panel DockPanel.Dock="Top" Margin="20">
-                    <Image Source="{Binding Cover}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="{Binding Cover}" />
+                    <ListBox Grid.Column="1" Items="{Binding Songs}">
+                    </ListBox>
+                    </Grid>
                 </Panel>
             </DockPanel>
         </Panel>

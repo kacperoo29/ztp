@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +25,18 @@ namespace ElectricPlayer.Player.ViewModels
         public ReactiveCommand<Unit, Unit> OnSaveToJson { get; }
 
         private Bitmap? _cover;
-
         public Bitmap? Cover
         {
             get => _cover;
             private set => this.RaiseAndSetIfChanged(ref _cover, value);
+        }
+
+        private IEnumerable<string> _songs;
+
+        public IEnumerable<string> Songs
+        {
+            get => _songs;
+            private set => this.RaiseAndSetIfChanged(ref _songs, value);
         }
 
         private StatusBarViewModel _trackStatus;
@@ -61,6 +69,7 @@ namespace ElectricPlayer.Player.ViewModels
 
             MusicPlayer.ChangeState(new ReadyState(MusicPlayer));
             MusicPlayer.SongChanged.Attach(this);
+            Songs = MusicPlayer.Playlist.Songs.Select(x => x.Metadata.Title);
 
             OnSaveToJson = ReactiveCommand.Create(() =>
             {
