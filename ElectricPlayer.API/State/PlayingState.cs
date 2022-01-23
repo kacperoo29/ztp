@@ -33,6 +33,9 @@ namespace ElectricPlayer.API.State
             {
                 _player.ChangeState(new ReadyState(_player));
                 _player.ExecuteCommand(new PlayCommand(song));
+                _player.Iterator.SetCurrent(_player.Playlist.Songs.IndexOf(song));
+                _player.SongChanged.Song = song;
+                _player.SongChanged.Notify();
             }
         }
 

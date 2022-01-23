@@ -28,6 +28,7 @@
             </Border.Background>
             <DockPanel>
                 <Panel Margin="10 0 0 20">
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Title}"/>
                     <l:ControlPanel DataContext="{Binding ControlPanel}"></l:ControlPanel>
                     <l:StatusBar Margin="50 0" DataContext="{Binding TrackStatus}"
                                  VerticalAlignment="Bottom" />

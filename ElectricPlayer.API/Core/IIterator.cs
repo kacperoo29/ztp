@@ -7,5 +7,6 @@ namespace ElectricPlayer.API.Core
         Song GetNext();
         Song GetCurrent();
         Song GetPrevious();
+        void SetCurrent(int index);
     }
 }

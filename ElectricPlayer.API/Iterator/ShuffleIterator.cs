@@ -19,9 +19,7 @@ namespace ElectricPlayer.API.Iterator
             for (int i = Songs.Count - 1; i > 1; --i)
             {
                 int j = rnd.Next(0, Songs.Count);
-                int tmp = _indices[i];
-                _indices[i] = _indices[j];
-                _indices[j] = tmp;
+                (_indices[i], _indices[j]) = (_indices[j], _indices[i]);
             }
 
         }
@@ -45,6 +43,11 @@ namespace ElectricPlayer.API.Iterator
                 _idx = Songs.Count;
 
             return Songs[_indices[--_idx]];
+        }
+
+        public void SetCurrent(int index)
+        {
+            _idx = index;
         }
     }
 }

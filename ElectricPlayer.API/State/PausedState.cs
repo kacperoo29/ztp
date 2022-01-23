@@ -25,6 +25,13 @@ namespace ElectricPlayer.API.State
             
             _player.PlayPauseChanged.IsPlaying = true;
             _player.PlayPauseChanged.Notify();
+
+            if (song != null)
+            {
+                _player.Iterator.SetCurrent(_player.Playlist.Songs.IndexOf(song));
+                _player.SongChanged.Song = song;
+                _player.SongChanged.Notify();
+            }
         }
 
         public override void PreviousSong()
@@ -36,7 +43,7 @@ namespace ElectricPlayer.API.State
 
         public override void Seek(long time)
         {
-            throw new NotImplementedException();
+            _player.SeekImpl(time);
         }
 
         public override void Unlock()

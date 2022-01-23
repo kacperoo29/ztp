@@ -34,5 +34,10 @@ namespace ElectricPlayer.API.Iterator
                 
             return Songs[--_idx];
         }
+
+        public void SetCurrent(int index)
+        {
+            _idx = index;
+        }
     }
 }

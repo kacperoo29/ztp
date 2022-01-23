@@ -63,6 +63,13 @@ namespace ElectricPlayer.Player.ViewModels
             set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
         }
 
+        private string _title;
+        public string Title
+        {
+            get => _title;
+            set => this.RaiseAndSetIfChanged(ref _title, value);
+        }
+
         public MainWindowViewModel()
         {
             MusicPlayer = new API.MusicPlayer();
@@ -87,6 +94,7 @@ namespace ElectricPlayer.Player.ViewModels
             if (current?.Metadata?.Artwork != null)
             {
                 Cover = new Bitmap(new MemoryStream(current.Metadata.Artwork));
+                Title = current.Metadata.Title;
             }
         }
 
