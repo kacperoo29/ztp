@@ -67,7 +67,7 @@
                                     </Image>
                                 </Button>
                             </StackPanel>
-                            <ListBox Items="{Binding Songs}">
+                            <ListBox SelectedIndex="{Binding SelectedIndex}" Items="{Binding Songs}">
                             </ListBox>
                         </DockPanel>
                     </Grid>

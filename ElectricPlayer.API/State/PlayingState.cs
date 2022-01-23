@@ -1,3 +1,4 @@
+using ElectricPlayer.API.Commands;
 using ElectricPlayer.API.Core;
 
 namespace ElectricPlayer.API.State
@@ -20,11 +21,19 @@ namespace ElectricPlayer.API.State
 
         public override void Play(Song? song)
         {
-            _player.PausePlayback();
-            _player.ChangeState(new PausedState(_player));
+            if (song == null)
+            {
+                _player.PausePlayback();
+                _player.ChangeState(new PausedState(_player));
 
-            _player.PlayPauseChanged.IsPlaying = false;
-            _player.PlayPauseChanged.Notify();
+                _player.PlayPauseChanged.IsPlaying = false;
+                _player.PlayPauseChanged.Notify();
+            }
+            else
+            {
+                _player.ChangeState(new ReadyState(_player));
+                _player.ExecuteCommand(new PlayCommand(song));
+            }
         }
 
         public override void PreviousSong()

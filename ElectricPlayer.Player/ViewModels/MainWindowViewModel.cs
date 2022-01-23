@@ -24,6 +24,7 @@ namespace ElectricPlayer.Player.ViewModels
         public MusicPlayer MusicPlayer { get; private set; }
 
         private Bitmap? _cover;
+
         public Bitmap? Cover
         {
             get => _cover;
@@ -54,6 +55,14 @@ namespace ElectricPlayer.Player.ViewModels
             set => this.RaiseAndSetIfChanged(ref _controlPanel, value);
         }
 
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
+        }
+
         public MainWindowViewModel()
         {
             MusicPlayer = new API.MusicPlayer();
@@ -63,6 +72,13 @@ namespace ElectricPlayer.Player.ViewModels
 
             MusicPlayer.SongChanged.Attach(this);
             MusicPlayer.PlaylistChanged.Attach(this);
+
+            this.WhenAnyValue(x => x.SelectedIndex)
+                .Subscribe(x =>
+                {
+                    if (x >= 0 && MusicPlayer.Playlist.Songs.Count > x)
+                        MusicPlayer.ExecuteCommand(new PlayCommand(MusicPlayer.Playlist.Songs[x]));
+                });
         }
 
         private void RefreshData()
