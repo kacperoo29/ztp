@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:ElectricPlayer.Player.Controls"
+             xmlns:viewModels="clr-namespace:ElectricPlayer.Player.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="100"
+             x:Class="ElectricPlayer.Player.Views.StatusBar">
+    <Panel>
+        <Panel>
+            <StackPanel DockPanel.Dock="Bottom">
+                <DockPanel Margin="0 5">
+                    <TextBlock DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                               Text="{Binding CurrentTime}" Foreground="#C0C0C0" FontSize="12"
+                    />
+                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                               Text="{Binding CurrentDuration}" Foreground="#C0C0C0" FontSize="12"
+                    />
+                    <controls:SeekSlider Margin="20 0" Height="12" Value="{Binding Position}" Maximum="1.0" Minimum="0"
+                                  IsSeeking="{Binding IsTrackSeeking, Mode=TwoWay}"
+                                  SeekValue="{Binding SeekPosition, Mode=TwoWay}" />
+                </DockPanel>
+                <TextBlock Text="{Binding Status}" Margin="10 0 0 0" FontSize="10"
+                           VerticalAlignment="Bottom" Foreground="#C0C0C0" />
+            </StackPanel>
+        </Panel>
+    </Panel>
+</UserControl>

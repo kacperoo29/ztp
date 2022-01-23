@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="LibVLCSharp" Version="3.6.5" />
+    <PackageReference Include="ReactiveUI" Version="13.2.10" />
     <PackageReference Include="TagLibSharp" Version="2.2.0" />
   </ItemGroup>
 

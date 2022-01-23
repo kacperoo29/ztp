@@ -1,14 +1,17 @@
+using System.ComponentModel;
 using ElectricPlayer.API.Core;
 using ElectricPlayer.API.Events;
 using ElectricPlayer.API.IO;
 using ElectricPlayer.API.State;
 using LibVLCSharp.Shared;
+using ReactiveUI;
 
 namespace ElectricPlayer.API
 {
     public class MusicPlayer : IDisposable
     {
         public PlaybackStateChanged PlaybackStateChanged { get; private set; }
+        public SongChanged SongChanged { get; private set; }
         public AbstractState State { get; private set; }
         public IPlaylist Playlist { get; internal set; }
         public IIterator Iterator { get; private set; }
@@ -25,10 +28,12 @@ namespace ElectricPlayer.API
             Playlist = new Core.Playlist();
             Iterator = Playlist.CreateIterator(_currentIterator);
             PlaybackStateChanged = new();
+            SongChanged = new();
             _commandHistory = new();
 
             LibVLCSharp.Shared.Core.Initialize();
         }
+
         public void ChangeState(AbstractState state)
         {
             State = state;
@@ -47,7 +52,7 @@ namespace ElectricPlayer.API
         }
 
         // TODO: Move internal functions to another class and make MusicPlayer more facade-like
-        internal void StartPlayback(Song? song)
+        internal Song StartPlayback(Song? song)
         {
             _mediaPlayer?.Dispose();
 
@@ -69,6 +74,8 @@ namespace ElectricPlayer.API
                 PlaybackStateChanged.Time = _mediaPlayer.Time;
                 PlaybackStateChanged.Notify();
             };
+
+            return song;
         }
 
         internal void ResumePlayback()

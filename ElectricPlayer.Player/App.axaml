@@ -8,5 +8,6 @@
 
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
+        <StyleInclude Source="avares://ElectricPlayer.Player/Controls/SeekSlider.axaml" />
     </Application.Styles>
 </Application>

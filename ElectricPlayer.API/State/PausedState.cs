@@ -13,9 +13,11 @@ namespace ElectricPlayer.API.State
 
         public override void NextSong()
         {
-            _player.Iterator?.GetNext();
+            var song = _player.Iterator?.GetNext();
+            _player.SongChanged.Song = song;
+            _player.SongChanged.Notify();
         }
-
+        
         public override void Play(Song? song)
         {
             _player.ResumePlayback();
@@ -24,7 +26,9 @@ namespace ElectricPlayer.API.State
 
         public override void PreviousSong()
         {
-            throw new NotImplementedException();
+            var song = _player.Iterator?.GetPrevious();
+            _player.SongChanged.Song = song;
+            _player.SongChanged.Notify();
         }
 
         public override void Seek(long time)

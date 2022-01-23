@@ -41,6 +41,14 @@ namespace ElectricPlayer.Player.ViewModels
             get => _title;
             private set => this.RaiseAndSetIfChanged(ref _title, value);
         }
+        
+        private StatusBarViewModel _trackStatus;
+        
+        public StatusBarViewModel TrackStatus
+        {
+            get => _trackStatus;
+            set => this.RaiseAndSetIfChanged(ref _trackStatus, value);
+        }
 
         public MainWindowViewModel()
         {
@@ -51,6 +59,8 @@ namespace ElectricPlayer.Player.ViewModels
                     MusicPlayer,
                     new JSONPlaylist(@"/home/kacper/repos/ztp/test.json"))
                 );
+
+            TrackStatus = new StatusBarViewModel(MusicPlayer);
 
             MusicPlayer.ChangeState(new ReadyState(MusicPlayer));
             MusicPlayer.PlaybackStateChanged.Attach(this);
@@ -105,12 +115,7 @@ namespace ElectricPlayer.Player.ViewModels
 
         public void Update(Subject subject)
         {
-            switch (subject)
-            {
-                case PlaybackStateChanged e:
-                    Console.WriteLine($"{e.Time}");
-                    break;
-            }
+
         }
     }
 }

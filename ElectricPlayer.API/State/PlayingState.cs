@@ -16,6 +16,8 @@ namespace ElectricPlayer.API.State
             if (song != null) 
             {
                 _player.StartPlayback(song);
+                _player.SongChanged.Song = song;
+                _player.SongChanged.Notify();
             }
         }
 
@@ -31,6 +33,8 @@ namespace ElectricPlayer.API.State
             if (song != null) 
             {
                 _player.StartPlayback(song);
+                _player.SongChanged.Song = song;
+                _player.SongChanged.Notify();
             }
         }
 

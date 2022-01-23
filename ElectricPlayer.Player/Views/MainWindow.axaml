@@ -3,8 +3,13 @@
         xmlns:vm="using:ElectricPlayer.Player.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:l="clr-namespace:ElectricPlayer.Player.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ElectricPlayer.Player.Views.MainWindow"
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        Background="{x:Null}"
         Icon="/Assets/avalonia-logo.ico"
         Title="ElectricPlayer.Player">
 
@@ -13,12 +18,27 @@
     </Design.DataContext>
 
     <Panel>
-        <Image Source="{Binding Cover}"></Image>
-        <Button Command="{Binding OnClickCommand}" Content="Play"></Button>
-        <Button Command="{Binding OnNextSong}" Content="Next" Margin="0 80 0 0"></Button>
-        <Button Click="Button_OnClick" Content="Add to playlist" Margin="0 0 0 80"></Button>
-        <Button Command="{Binding OnSaveToJson}" Content="Save to json" Margin="0 0 0 160"></Button>
-        <Label Content="{Binding Title}"></Label>
+        <Border VerticalAlignment="Bottom" CornerRadius="12 12 0 0" Margin="20 0" Height="100" ZIndex="1"
+                BoxShadow="0 0 28 0 #7F000000">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#404040" Offset="0" />
+                    <GradientStop Color="#1c1c1c" Offset="0.567" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <DockPanel>
+                <Panel Margin="10 0 0 20">
+                <!-- <Image Source="{Binding Cover}"></Image> -->
+                <Button Command="{Binding OnClickCommand}" Content="Play"></Button>
+                <!-- <Button Command="{Binding OnNextSong}" Content="Next" Margin="0 80 0 0"></Button> -->
+                <!-- <Button Click="Button_OnClick" Content="Add to playlist" Margin="0 0 0 80"></Button> -->
+                <!-- <Button Command="{Binding OnSaveToJson}" Content="Save to json" Margin="0 0 0 160"></Button> -->
+                <!-- <Label Content="{Binding Title}"></Label> -->
+                <l:StatusBar Margin="50 0" DataContext="{Binding TrackStatus}"
+                             VerticalAlignment="Bottom" />
+                </Panel> 
+            </DockPanel>
+        </Border>
     </Panel>
 
 </Window>

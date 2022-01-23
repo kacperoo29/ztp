@@ -17,8 +17,9 @@ namespace ElectricPlayer.API.State
 
         public override void Play(Song? song)
         {
-            _player.StartPlayback(song);
+            _player.SongChanged.Song = _player.StartPlayback(song);
             _player.ChangeState(new PlayingState(_player));
+            _player.SongChanged.Notify();
         }
 
         public override void PreviousSong()

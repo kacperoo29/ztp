@@ -21,8 +21,4 @@
   <ItemGroup>
     <ProjectReference Include="..\ElectricPlayer.API\ElectricPlayer.API.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Controls" />
-  </ItemGroup>
 </Project>
