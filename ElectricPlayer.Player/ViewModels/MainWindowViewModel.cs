@@ -22,7 +22,6 @@ namespace ElectricPlayer.Player.ViewModels
     public class MainWindowViewModel : ViewModelBase, IObserver
     {
         public MusicPlayer MusicPlayer { get; private set; }
-        public ReactiveCommand<Unit, Unit> OnSaveToJson { get; }
 
         private Bitmap? _cover;
         public Bitmap? Cover
@@ -58,27 +57,12 @@ namespace ElectricPlayer.Player.ViewModels
         public MainWindowViewModel()
         {
             MusicPlayer = new API.MusicPlayer();
-            // TODO: Select file from disc, decide if xml or json
-            MusicPlayer.ExecuteCommand(
-                new LoadPlaylistCommand(
-                    new JSONPlaylist(@"/home/kacper/repos/ztp/test.json"))
-            );
 
             TrackStatus = new StatusBarViewModel(MusicPlayer);
             ControlPanel = new ControlPanelViewModel(MusicPlayer);
 
-            MusicPlayer.ChangeState(new ReadyState(MusicPlayer));
             MusicPlayer.SongChanged.Attach(this);
-            Songs = MusicPlayer.Playlist.Songs.Select(x => x.Metadata.Title);
-
-            OnSaveToJson = ReactiveCommand.Create(() =>
-            {
-                MusicPlayer.ExecuteCommand(
-                    new SavePlaylistCommand(
-                        PlaylistFormat.JSON,
-                        "/home/kacper/repos/ztp/new.json")
-                );
-            });
+            MusicPlayer.PlaylistChanged.Attach(this);
         }
 
         private void RefreshData()
@@ -96,6 +80,9 @@ namespace ElectricPlayer.Player.ViewModels
             {
                 case SongChanged e:
                     RefreshData();
+                    break;
+                case PlaylistChanged e:
+                    Songs = MusicPlayer.Playlist.Songs.Select(x => x.Metadata.Title);
                     break;
             }
         }

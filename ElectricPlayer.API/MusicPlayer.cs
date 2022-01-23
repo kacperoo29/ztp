@@ -13,6 +13,7 @@ namespace ElectricPlayer.API
         public PlaybackStateChanged PlaybackStateChanged { get; private set; }
         public SongChanged SongChanged { get; private set; }
         public PlayPauseChanged PlayPauseChanged { get; private set; }
+        public PlaylistChanged PlaylistChanged { get; private set; }
 
         public AbstractState State { get; private set; }
         public IPlaylist Playlist { get; internal set; }
@@ -32,6 +33,7 @@ namespace ElectricPlayer.API
             PlaybackStateChanged = new();
             SongChanged = new();
             PlayPauseChanged = new();
+            PlaylistChanged = new();
             _commandHistory = new();
 
             LibVLCSharp.Shared.Core.Initialize();

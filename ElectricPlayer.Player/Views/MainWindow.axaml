@@ -17,7 +17,7 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <Panel>
+    <Panel DragDrop.AllowDrop="True">
         <Border VerticalAlignment="Bottom" CornerRadius="12 12 0 0" Margin="20 0" Height="100" ZIndex="1"
                 BoxShadow="0 0 28 0 #7F000000">
             <Border.Background>
@@ -37,19 +37,39 @@
         <Panel>
             <ExperimentalAcrylicBorder IsHitTestVisible="False">
                 <ExperimentalAcrylicBorder.Material>
-                    <ExperimentalAcrylicMaterial BackgroundSource="Digger" TintColor="Black" TintOpacity="1" MaterialOpacity="0.6" />
+                    <ExperimentalAcrylicMaterial BackgroundSource="Digger" TintColor="Black" TintOpacity="1"
+                                                 MaterialOpacity="0.6" />
                 </ExperimentalAcrylicBorder.Material>
             </ExperimentalAcrylicBorder>
             <DockPanel>
                 <Panel DockPanel.Dock="Top" Margin="20">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Source="{Binding Cover}" />
-                    <ListBox Grid.Column="1" Items="{Binding Songs}">
-                    </ListBox>
+                        <DockPanel Grid.Column="1">
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button ToolTip.Tip="Export to file" Click="Export_OnClick">
+                                    <Image Width="20" Height="20">
+                                        <DrawingImage Drawing="{DynamicResource FileExport}" />
+                                    </Image>
+                                </Button>
+                                <Button ToolTip.Tip="Import from file" Click="Import_OnClick">
+                                    <Image Width="20" Height="20">
+                                        <DrawingImage Drawing="{DynamicResource FileImport}" />
+                                    </Image>
+                                </Button>
+                                <Button ToolTip.Tip="Add song" Click="Add_OnClick">
+                                    <Image Width="20" Height="20">
+                                        <DrawingImage Drawing="{DynamicResource Add}" />
+                                    </Image>
+                                </Button>
+                            </StackPanel>
+                            <ListBox Items="{Binding Songs}">
+                            </ListBox>
+                        </DockPanel>
                     </Grid>
                 </Panel>
             </DockPanel>

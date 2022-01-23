@@ -20,6 +20,8 @@ public class LoadPlaylistCommand : ICommand
             player.Playlist = _playlist;
             player.CreateIterator();
             player.State.Unlock();
+            
+            player.PlaylistChanged.Notify();
         }
     }
 }

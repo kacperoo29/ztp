@@ -21,6 +21,8 @@ public class AddSongCommand : ICommand
             player.Playlist.Songs.Add(_song);
             player.CreateIterator();
             player.State.Unlock();
+            
+            player.PlaylistChanged.Notify();
         }
     }
 }
