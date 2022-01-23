@@ -6,18 +6,16 @@ namespace ElectricPlayer.API.Commands;
 
 public class SavePlaylistCommand : ICommand
 {
-    private MusicPlayer _player;
     private PlaylistFormat _format;
     private string _path;
 
-    public SavePlaylistCommand(MusicPlayer target, PlaylistFormat format, string path)
+    public SavePlaylistCommand(PlaylistFormat format, string path)
     {
-        _player = target;
         _format = format;
         _path = path;
     }
     
-    public void Execute()
+    public void Execute(object sender)
     {
         PlaylistIO io = _format switch
         {
@@ -26,6 +24,7 @@ public class SavePlaylistCommand : ICommand
             _ => throw new InvalidEnumArgumentException()
         };
 
-        io.Export(_player.Playlist, _path);
+        if (sender is MusicPlayer player)
+            io.Export(player.Playlist, _path);
     }
 }

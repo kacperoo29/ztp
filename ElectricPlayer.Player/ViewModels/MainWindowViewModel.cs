@@ -41,9 +41,9 @@ namespace ElectricPlayer.Player.ViewModels
             get => _title;
             private set => this.RaiseAndSetIfChanged(ref _title, value);
         }
-        
+
         private StatusBarViewModel _trackStatus;
-        
+
         public StatusBarViewModel TrackStatus
         {
             get => _trackStatus;
@@ -64,9 +64,8 @@ namespace ElectricPlayer.Player.ViewModels
             // TODO: Select file from disc, decide if xml or json
             MusicPlayer.ExecuteCommand(
                 new LoadPlaylistCommand(
-                    MusicPlayer,
                     new JSONPlaylist(@"/home/kacper/repos/ztp/test.json"))
-                );
+            );
 
             TrackStatus = new StatusBarViewModel(MusicPlayer);
             ControlPanel = new ControlPanelViewModel(MusicPlayer);
@@ -75,23 +74,14 @@ namespace ElectricPlayer.Player.ViewModels
             MusicPlayer.PlaybackStateChanged.Attach(this);
             RefreshData();
 
-            OnClickCommand = ReactiveCommand.Create(() =>
-            {
-                MusicPlayer.ExecuteCommand(new PlayCommand(MusicPlayer, null));
-            });
-
-            OnNextSong = ReactiveCommand.Create(() =>
-            {
-                MusicPlayer.ExecuteCommand(new NextCommand(MusicPlayer));
-                RefreshData();
-            });
+            OnClickCommand = ReactiveCommand.Create(() => { MusicPlayer.ExecuteCommand(new PlayCommand(null)); });
 
             OnSaveToJson = ReactiveCommand.Create(() =>
             {
                 MusicPlayer.ExecuteCommand(
-                    new SavePlaylistCommand(MusicPlayer,
-                    PlaylistFormat.JSON,
-                    "/home/kacper/repos/ztp/new.json")
+                    new SavePlaylistCommand(
+                        PlaylistFormat.JSON,
+                        "/home/kacper/repos/ztp/new.json")
                 );
             });
         }
@@ -99,7 +89,7 @@ namespace ElectricPlayer.Player.ViewModels
         public void AddToPlaylist(string[] results)
         {
             foreach (var result in results)
-                MusicPlayer.ExecuteCommand(new AddSongCommand(MusicPlayer, new Song(result)));
+                MusicPlayer.ExecuteCommand(new AddSongCommand(new Song(result)));
 
             RefreshData();
         }
@@ -124,7 +114,6 @@ namespace ElectricPlayer.Player.ViewModels
 
         public void Update(Subject subject)
         {
-
         }
     }
 }

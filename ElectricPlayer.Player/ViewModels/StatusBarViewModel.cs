@@ -74,7 +74,7 @@ public class StatusBarViewModel : ViewModelBase, IObserver
             .Subscribe(x =>
             {
                 _musicPlayer.ExecuteCommand(
-                    new SeekCommand(_musicPlayer, (long)(SeekPosition * Duration.TotalMilliseconds)));
+                    new SeekCommand((long)(SeekPosition * Duration.TotalMilliseconds)));
             });
 
         this.WhenAnyValue(x => x.Status)

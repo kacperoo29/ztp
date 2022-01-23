@@ -4,14 +4,11 @@ namespace ElectricPlayer.API.Commands;
 
 public class StopCommand : ICommand
 {
-    private MusicPlayer _player;
-
-    public StopCommand(MusicPlayer target)
+    public StopCommand()
     {
-        _player = target;
     }
     
-    public void Execute()
+    public void Execute(object sender)
     {
         
     }

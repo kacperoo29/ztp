@@ -4,15 +4,13 @@ namespace ElectricPlayer.API.Commands;
 
 public class NextCommand : ICommand
 {
-    private MusicPlayer _player;
-
-    public NextCommand(MusicPlayer target)
+    public NextCommand()
     {
-        _player = target;
     }
-    
-    public void Execute()
+
+    public void Execute(object sender)
     {
-        _player.State.NextSong();
+        if (sender is MusicPlayer player)
+            player.State.NextSong();
     }
 }

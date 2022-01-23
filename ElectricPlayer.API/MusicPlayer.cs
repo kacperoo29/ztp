@@ -45,7 +45,7 @@ namespace ElectricPlayer.API
         // TODO: Inject this instead of needing MusicPlayer arg in every command
         public void ExecuteCommand(ICommand command)
         {
-            command.Execute();
+            command.Execute(this);
             // TODO: Optional undo last command
             _commandHistory.Push(command);
         }

@@ -6,20 +6,21 @@ namespace ElectricPlayer.API.Commands;
 
 public class AddSongCommand : ICommand
 {
-    private MusicPlayer _player;
     private Song _song;
 
-    public AddSongCommand(MusicPlayer player, Song song)
+    public AddSongCommand(Song song)
     {
-        _player = player;
         _song = song;
     }
 
-    public void Execute()
+    public void Execute(object sender)
     {
-        _song = PlaylistIO.PopulateMetadata(_song);
-        _player.Playlist.Songs.Add(_song);
-        _player.CreateIterator();
-        _player.State.Unlock();
+        if (sender is MusicPlayer player)
+        {
+            _song = PlaylistIO.PopulateMetadata(_song);
+            player.Playlist.Songs.Add(_song);
+            player.CreateIterator();
+            player.State.Unlock();
+        }
     }
 }

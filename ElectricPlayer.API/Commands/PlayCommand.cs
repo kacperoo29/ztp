@@ -4,18 +4,17 @@ namespace ElectricPlayer.API.Commands;
 
 public class PlayCommand : ICommand
 {
-    private MusicPlayer _target;
     private Song? _song;
     
-    public PlayCommand(MusicPlayer target, Song? song)
+    public PlayCommand(Song? song)
     {
-        _target = target;
         _song = song;
     }
 
 
-    public void Execute()
+    public void Execute(object sender)
     {
-        _target.State.Play(_song);
+        if (sender is MusicPlayer player)
+            player.State.Play(_song);
     }
 }

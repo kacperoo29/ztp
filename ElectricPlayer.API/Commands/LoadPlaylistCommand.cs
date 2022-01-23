@@ -6,19 +6,20 @@ namespace ElectricPlayer.API.Commands;
 
 public class LoadPlaylistCommand : ICommand
 {
-    private MusicPlayer _player;
     private IPlaylist _playlist;
 
-    public LoadPlaylistCommand(MusicPlayer player, IPlaylist playlist)
+    public LoadPlaylistCommand(IPlaylist playlist)
     {
-        _player = player;
         _playlist = playlist;
     }
 
-    public void Execute()
+    public void Execute(object sender)
     {
-        _player.Playlist = _playlist;
-        _player.CreateIterator();
-        _player.State.Unlock();
+        if (sender is MusicPlayer player)
+        {
+            player.Playlist = _playlist;
+            player.CreateIterator();
+            player.State.Unlock();
+        }
     }
 }

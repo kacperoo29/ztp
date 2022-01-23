@@ -29,11 +29,11 @@ public class ControlPanelViewModel : ViewModelBase, IObserver
         _musicPlayer.PlayPauseChanged.Attach(this);
         
         PlayCommand =
-            ReactiveCommand.Create(() => { _musicPlayer.ExecuteCommand(new PlayCommand(_musicPlayer, null)); });
+            ReactiveCommand.Create(() => { _musicPlayer.ExecuteCommand(new PlayCommand(null)); });
 
-        BackCommand = ReactiveCommand.Create(() => { _musicPlayer.ExecuteCommand(new PreviousCommand(_musicPlayer)); });
+        BackCommand = ReactiveCommand.Create(() => { _musicPlayer.ExecuteCommand(new PreviousCommand()); });
 
-        ForwardCommand = ReactiveCommand.Create(() => { _musicPlayer.ExecuteCommand(new NextCommand(_musicPlayer)); });
+        ForwardCommand = ReactiveCommand.Create(() => { _musicPlayer.ExecuteCommand(new NextCommand()); });
     }
 
     public void Update(Subject subject)

@@ -5,18 +5,19 @@ namespace ElectricPlayer.API.Commands;
 
 public class ToggleShuffleCommand : ICommand
 {
-    private MusicPlayer _player;
-
-    public ToggleShuffleCommand(MusicPlayer player)
+    public ToggleShuffleCommand()
     {
-        _player = player;
+        
     }
 
-    public void Execute()
+    public void Execute(object sender)
     {
-        _player._currentIterator = _player._currentIterator == IteratorType.Shuffle
+        if (sender is MusicPlayer player)
+        {
+            player._currentIterator = player._currentIterator == IteratorType.Shuffle
                 ? IteratorType.Ordered
                 : IteratorType.Shuffle;
-        _player.CreateIterator();
+            player.CreateIterator();
+        }
     }
 }

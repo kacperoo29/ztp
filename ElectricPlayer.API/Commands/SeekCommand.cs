@@ -4,18 +4,16 @@ namespace ElectricPlayer.API.Commands;
 
 public class SeekCommand : ICommand
 {
-    private MusicPlayer _target;
     private long _timestamp;
-    
-    public SeekCommand(MusicPlayer target, long timestamp)
+
+    public SeekCommand(long timestamp)
     {
-        _target = target;
         _timestamp = timestamp;
     }
 
-
-    public void Execute()
+    public void Execute(object sender)
     {
-        _target.State.Seek(_timestamp);
+        if (sender is MusicPlayer player)
+            player.State.Seek(_timestamp);
     }
 }
