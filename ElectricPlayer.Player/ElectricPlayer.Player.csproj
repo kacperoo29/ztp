@@ -3,7 +3,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <RootNamespace>MusicPlayer.Player</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />

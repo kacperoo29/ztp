@@ -5,7 +5,7 @@ namespace ElectricPlayer.API.State
     public abstract class AbstractState
     {
         protected MusicPlayer _player;
-
+        
         public AbstractState(MusicPlayer player)
         {
             _player = player;

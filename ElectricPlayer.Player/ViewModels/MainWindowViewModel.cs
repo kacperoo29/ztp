@@ -50,6 +50,14 @@ namespace ElectricPlayer.Player.ViewModels
             set => this.RaiseAndSetIfChanged(ref _trackStatus, value);
         }
 
+        private ControlPanelViewModel _controlPanel;
+
+        public ControlPanelViewModel ControlPanel
+        {
+            get => _controlPanel;
+            set => this.RaiseAndSetIfChanged(ref _controlPanel, value);
+        }
+
         public MainWindowViewModel()
         {
             MusicPlayer = new API.MusicPlayer();
@@ -61,6 +69,7 @@ namespace ElectricPlayer.Player.ViewModels
                 );
 
             TrackStatus = new StatusBarViewModel(MusicPlayer);
+            ControlPanel = new ControlPanelViewModel(MusicPlayer);
 
             MusicPlayer.ChangeState(new ReadyState(MusicPlayer));
             MusicPlayer.PlaybackStateChanged.Attach(this);

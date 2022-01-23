@@ -28,15 +28,11 @@
             </Border.Background>
             <DockPanel>
                 <Panel Margin="10 0 0 20">
-                <!-- <Image Source="{Binding Cover}"></Image> -->
-                <Button Command="{Binding OnClickCommand}" Content="Play"></Button>
-                <!-- <Button Command="{Binding OnNextSong}" Content="Next" Margin="0 80 0 0"></Button> -->
-                <!-- <Button Click="Button_OnClick" Content="Add to playlist" Margin="0 0 0 80"></Button> -->
-                <!-- <Button Command="{Binding OnSaveToJson}" Content="Save to json" Margin="0 0 0 160"></Button> -->
-                <!-- <Label Content="{Binding Title}"></Label> -->
-                <l:StatusBar Margin="50 0" DataContext="{Binding TrackStatus}"
-                             VerticalAlignment="Bottom" />
-                </Panel> 
+                    <Button Command="{Binding OnClickCommand}" Content="Play"></Button>
+                    <l:ControlPanel DataContext="{Binding ControlPanel}"></l:ControlPanel>
+                    <l:StatusBar Margin="50 0" DataContext="{Binding TrackStatus}"
+                                 VerticalAlignment="Bottom" />
+                </Panel>
             </DockPanel>
         </Border>
     </Panel>

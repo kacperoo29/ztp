@@ -12,6 +12,8 @@ namespace ElectricPlayer.API
     {
         public PlaybackStateChanged PlaybackStateChanged { get; private set; }
         public SongChanged SongChanged { get; private set; }
+        public PlayPauseChanged PlayPauseChanged { get; private set; }
+
         public AbstractState State { get; private set; }
         public IPlaylist Playlist { get; internal set; }
         public IIterator Iterator { get; private set; }
@@ -29,6 +31,7 @@ namespace ElectricPlayer.API
             Iterator = Playlist.CreateIterator(_currentIterator);
             PlaybackStateChanged = new();
             SongChanged = new();
+            PlayPauseChanged = new();
             _commandHistory = new();
 
             LibVLCSharp.Shared.Core.Initialize();
@@ -38,7 +41,8 @@ namespace ElectricPlayer.API
         {
             State = state;
         }
-
+        
+        // TODO: Inject this instead of needing MusicPlayer arg in every command
         public void ExecuteCommand(ICommand command)
         {
             command.Execute();
