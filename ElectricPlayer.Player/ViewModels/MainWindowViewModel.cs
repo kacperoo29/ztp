@@ -114,7 +114,7 @@ namespace ElectricPlayer.Player.ViewModels
                     RefreshData();
                     break;
                 case PlaylistChanged e:
-                    Songs = MusicPlayer.Playlist.Songs.Select(x => x.Metadata.Title);
+                    Songs = MusicPlayer.Playlist.Songs.Select(x => String.Join(", ", x.Metadata.Artists) + " - " + x.Metadata.Title);
                     break;
             }
         }
