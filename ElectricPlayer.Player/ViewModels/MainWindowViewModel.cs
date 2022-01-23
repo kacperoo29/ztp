@@ -23,7 +23,6 @@ namespace ElectricPlayer.Player.ViewModels
     public class MainWindowViewModel : ViewModelBase, IObserver
     {
         public MusicPlayer MusicPlayer { get; private set; }
-        private ICoverService _coverService;
 
         private Bitmap? _cover;
         public Bitmap? Cover
@@ -47,7 +46,6 @@ namespace ElectricPlayer.Player.ViewModels
         }
 
         private ControlPanelViewModel _controlPanel;
-
         public ControlPanelViewModel ControlPanel
         {
             get => _controlPanel;
@@ -78,8 +76,6 @@ namespace ElectricPlayer.Player.ViewModels
             MusicPlayer.SongChanged.Attach(this);
             MusicPlayer.PlaylistChanged.Attach(this);
 
-            _coverService = new CachedCoverService();
-            
             this.WhenAnyValue(x => x.SelectedIndex)
                 .Subscribe(x =>
                 {
@@ -93,7 +89,7 @@ namespace ElectricPlayer.Player.ViewModels
             var current = MusicPlayer.Iterator?.GetCurrent();
             if (current != null)
             {
-                var coverData = _coverService.GetCover(current);
+                var coverData = MusicPlayer.GetCover(current);
                 Cover = new Bitmap(new MemoryStream(coverData));
                 Title = current.Metadata.Title;
             }

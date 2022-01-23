@@ -2,6 +2,7 @@ using System.ComponentModel;
 using ElectricPlayer.API.Core;
 using ElectricPlayer.API.Events;
 using ElectricPlayer.API.IO;
+using ElectricPlayer.API.Service;
 using ElectricPlayer.API.State;
 using LibVLCSharp.Shared;
 using ReactiveUI;
@@ -23,6 +24,7 @@ namespace ElectricPlayer.API
         private LibVLC _libVLC = new LibVLC();
         private MediaPlayer? _mediaPlayer;
         private Stack<ICommand> _commandHistory;
+        private ICoverService _coverService;
 
         public MusicPlayer()
         {
@@ -35,6 +37,7 @@ namespace ElectricPlayer.API
             PlayPauseChanged = new();
             PlaylistChanged = new();
             _commandHistory = new();
+            _coverService = new CachedCoverService();
 
             LibVLCSharp.Shared.Core.Initialize();
         }
@@ -51,6 +54,11 @@ namespace ElectricPlayer.API
             _commandHistory.Push(command);
         }
 
+        public byte[] GetCover(Song song)
+        {
+            return _coverService.GetCover(song);
+        }
+ 
         internal void CreateIterator()
         {
             Iterator = Playlist.CreateIterator(_currentIterator);
