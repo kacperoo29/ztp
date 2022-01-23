@@ -90,7 +90,8 @@ namespace ElectricPlayer.Player.ViewModels
             if (current != null)
             {
                 var coverData = MusicPlayer.GetCover(current);
-                Cover = new Bitmap(new MemoryStream(coverData));
+                if (coverData != null && coverData.Length > 0)
+                    Cover = new Bitmap(new MemoryStream(coverData));
                 Title = current.Metadata.Title;
             }
         }
