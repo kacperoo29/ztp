@@ -42,7 +42,6 @@ namespace ElectricPlayer.API
             State = state;
         }
         
-        // TODO: Inject this instead of needing MusicPlayer arg in every command
         public void ExecuteCommand(ICommand command)
         {
             command.Execute(this);

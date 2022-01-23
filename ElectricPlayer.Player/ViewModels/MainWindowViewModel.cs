@@ -21,9 +21,6 @@ namespace ElectricPlayer.Player.ViewModels
     public class MainWindowViewModel : ViewModelBase, IObserver
     {
         public MusicPlayer MusicPlayer { get; private set; }
-
-        public ReactiveCommand<Unit, Unit> OnClickCommand { get; }
-        public ReactiveCommand<Unit, Unit> OnNextSong { get; }
         public ReactiveCommand<Unit, Unit> OnSaveToJson { get; }
 
         private Bitmap? _cover;
@@ -32,14 +29,6 @@ namespace ElectricPlayer.Player.ViewModels
         {
             get => _cover;
             private set => this.RaiseAndSetIfChanged(ref _cover, value);
-        }
-
-        private string? _title;
-
-        public string? Title
-        {
-            get => _title;
-            private set => this.RaiseAndSetIfChanged(ref _title, value);
         }
 
         private StatusBarViewModel _trackStatus;
@@ -71,10 +60,7 @@ namespace ElectricPlayer.Player.ViewModels
             ControlPanel = new ControlPanelViewModel(MusicPlayer);
 
             MusicPlayer.ChangeState(new ReadyState(MusicPlayer));
-            MusicPlayer.PlaybackStateChanged.Attach(this);
-            RefreshData();
-
-            OnClickCommand = ReactiveCommand.Create(() => { MusicPlayer.ExecuteCommand(new PlayCommand(null)); });
+            MusicPlayer.SongChanged.Attach(this);
 
             OnSaveToJson = ReactiveCommand.Create(() =>
             {
@@ -86,34 +72,23 @@ namespace ElectricPlayer.Player.ViewModels
             });
         }
 
-        public void AddToPlaylist(string[] results)
-        {
-            foreach (var result in results)
-                MusicPlayer.ExecuteCommand(new AddSongCommand(new Song(result)));
-
-            RefreshData();
-        }
-
-        public async Task LoadCover(Stream stream)
-        {
-            await using (var imageStream = stream)
-            {
-                Cover = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
-            }
-        }
-
         private void RefreshData()
         {
             var current = MusicPlayer.Iterator?.GetCurrent();
             if (current?.Metadata?.Artwork != null)
             {
                 Cover = new Bitmap(new MemoryStream(current.Metadata.Artwork));
-                Title = current.Metadata.Title;
             }
         }
 
         public void Update(Subject subject)
         {
+            switch (subject)
+            {
+                case SongChanged e:
+                    RefreshData();
+                    break;
+            }
         }
     }
 }

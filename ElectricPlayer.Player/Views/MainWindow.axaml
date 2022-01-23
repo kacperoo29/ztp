@@ -28,13 +28,23 @@
             </Border.Background>
             <DockPanel>
                 <Panel Margin="10 0 0 20">
-                    <Button Command="{Binding OnClickCommand}" Content="Play"></Button>
                     <l:ControlPanel DataContext="{Binding ControlPanel}"></l:ControlPanel>
                     <l:StatusBar Margin="50 0" DataContext="{Binding TrackStatus}"
                                  VerticalAlignment="Bottom" />
                 </Panel>
             </DockPanel>
         </Border>
+        <Panel>
+            <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                <ExperimentalAcrylicBorder.Material>
+                    <ExperimentalAcrylicMaterial BackgroundSource="Digger" TintColor="Black" TintOpacity="1" MaterialOpacity="0.6" />
+                </ExperimentalAcrylicBorder.Material>
+            </ExperimentalAcrylicBorder>
+            <DockPanel>
+                <Panel DockPanel.Dock="Top" Margin="20">
+                    <Image Source="{Binding Cover}" />
+                </Panel>
+            </DockPanel>
+        </Panel>
     </Panel>
-
 </Window>
