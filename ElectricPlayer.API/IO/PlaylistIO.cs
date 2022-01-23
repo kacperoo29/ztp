@@ -29,7 +29,7 @@ namespace ElectricPlayer.API.IO
             song.Metadata  = new Metadata
             {
                 // TODO: Pull other metadata
-                Title = file.Tag.Title,
+                Title = file.Tag.Title ?? Path.GetFileNameWithoutExtension(song.Path),
                 Album = file.Tag.Album,
                 Artists = file.Tag.Performers
             };

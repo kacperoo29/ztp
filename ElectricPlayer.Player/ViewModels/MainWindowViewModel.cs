@@ -5,8 +5,10 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using ElectricPlayer.API;
 using ElectricPlayer.API.Commands;
 using ElectricPlayer.API.Core;
@@ -91,7 +93,15 @@ namespace ElectricPlayer.Player.ViewModels
             {
                 var coverData = MusicPlayer.GetCover(current);
                 if (coverData != null && coverData.Length > 0)
+                {
                     Cover = new Bitmap(new MemoryStream(coverData));
+                }
+                else
+                {
+                    var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+                    Cover = new Bitmap(assets.Open(new Uri("avares://ElectricPlayer.Player/Assets/music_placeholder.png")));
+                }
+
                 Title = current.Metadata.Title;
             }
         }
