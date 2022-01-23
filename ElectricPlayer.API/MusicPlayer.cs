@@ -74,6 +74,11 @@ namespace ElectricPlayer.API
                 PlaybackStateChanged.Time = _mediaPlayer.Time;
                 PlaybackStateChanged.Notify();
             };
+            
+            _mediaPlayer.EndReached += delegate
+            {
+                ChangeState(new ReadyState(this));
+            };
 
             return song;
         }

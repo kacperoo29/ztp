@@ -67,6 +67,7 @@ public class StatusBarViewModel : ViewModelBase, IObserver
     {
         _musicPlayer = musicPlayer;
         _musicPlayer.PlaybackStateChanged.Attach(this);
+        _musicPlayer.SongChanged.Attach(this);
         
         this.WhenAnyValue(x => x.SeekPosition)
             .Skip(1)
@@ -95,7 +96,9 @@ public class StatusBarViewModel : ViewModelBase, IObserver
                 Duration = TimeSpan.FromMilliseconds(e.Length);
                 CurrentDuration = FormatTimeSpan(Duration);
                 CurrentTime = FormatTimeSpan(TimeSpan.FromMilliseconds(e.Time));
-                Console.WriteLine(CurrentTime);
+                break;
+            case SongChanged e:
+                Position = SeekPosition = 0;
                 break;
         }
     }
