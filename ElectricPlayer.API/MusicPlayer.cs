@@ -21,11 +21,10 @@ namespace ElectricPlayer.API
         public IIterator Iterator { get; private set; }
 
         internal IteratorType _currentIterator;
-        private LibVLC _libVLC = new LibVLC();
+        private readonly LibVLC _libVLC = new LibVLC();
         private MediaPlayer? _mediaPlayer;
-        private Stack<ICommand> _commandHistory;
-        private ICoverService _coverService;
-
+        private readonly Stack<ICommand> _commandHistory;
+        
         public MusicPlayer()
         {
             State = new LockedState(this);
@@ -37,7 +36,6 @@ namespace ElectricPlayer.API
             PlayPauseChanged = new();
             PlaylistChanged = new();
             _commandHistory = new();
-            _coverService = new CachedCoverService();
 
             LibVLCSharp.Shared.Core.Initialize();
         }
@@ -56,7 +54,7 @@ namespace ElectricPlayer.API
 
         public byte[] GetCover(Song song)
         {
-            return _coverService.GetCover(song);
+            return CachedCoverService.Instance.GetCover(song);
         }
  
         internal void CreateIterator()

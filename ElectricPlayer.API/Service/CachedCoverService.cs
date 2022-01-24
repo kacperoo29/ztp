@@ -4,10 +4,16 @@ namespace ElectricPlayer.API.Service;
 
 public class CachedCoverService : ICoverService
 {
-    private readonly ICoverService _coverService;
-    private Dictionary<string, byte[]> _coverCache;
+    private static CachedCoverService? _instance;
+    public static CachedCoverService Instance
+    {
+        get { return _instance ??= new CachedCoverService(); }
+    }
 
-    public CachedCoverService()
+    private readonly ICoverService _coverService;
+    private readonly Dictionary<string, byte[]> _coverCache;
+
+    protected CachedCoverService()
     {
         _coverService = new CoverService();
         _coverCache = new Dictionary<string, byte[]>();
