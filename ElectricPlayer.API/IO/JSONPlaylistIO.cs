@@ -15,5 +15,12 @@ namespace ElectricPlayer.API.IO
             return JsonSerializer.Serialize(songs);
         }
 
+        protected override void WriteToFile(string path, string data)
+        {
+            if (!path.EndsWith(".json"))
+                path += ".json";
+                
+            File.WriteAllText(path, data);
+        }
     }
 }

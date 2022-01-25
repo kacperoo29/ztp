@@ -404,3 +404,5 @@ test.json
 test.flac
 test.xml
 *.flac
+
+plantuml/**

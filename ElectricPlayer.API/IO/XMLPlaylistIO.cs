@@ -16,6 +16,14 @@ namespace ElectricPlayer.API.IO
             return XmlSerializeToString(songs);
         }
 
+        protected override void WriteToFile(string path, string data)
+        {
+            if (!path.EndsWith(".xml"))
+                path += ".xml";
+                
+            File.WriteAllText(path, data);
+        }
+
         private static string XmlSerializeToString(object objectInstance)
         {
             var serializer = new XmlSerializer(objectInstance.GetType());

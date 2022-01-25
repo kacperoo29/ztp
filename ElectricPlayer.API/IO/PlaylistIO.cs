@@ -45,11 +45,6 @@ namespace ElectricPlayer.API.IO
             }
         }
 
-        private void WriteToFile(string path, string data)
-        {
-            File.WriteAllText(path, data);
-        }
-
         private string ReadFile(string path)
         {
             return File.ReadAllText(path);
@@ -57,5 +52,6 @@ namespace ElectricPlayer.API.IO
 
         protected abstract string Serialize(List<Song> songs);
         protected abstract List<Song> Deserialize(string path);
+        protected abstract void WriteToFile(string path, string data);
     }
 }
