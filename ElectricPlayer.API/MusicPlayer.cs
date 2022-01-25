@@ -21,12 +21,13 @@ namespace ElectricPlayer.API
         public IIterator Iterator { get; private set; }
 
         internal IteratorType _currentIterator;
-        private readonly LibVLC _libVLC = new LibVLC();
+        private readonly LibVLC _libVLC;
         private MediaPlayer? _mediaPlayer;
         private readonly Stack<ICommand> _commandHistory;
         
         public MusicPlayer()
         {
+            _libVLC = new LibVLC();
             State = new LockedState(this);
             _currentIterator = IteratorType.Ordered;
             Playlist = new Core.Playlist();
