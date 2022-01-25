@@ -27,6 +27,7 @@ namespace ElectricPlayer.API
         
         public MusicPlayer()
         {
+            LibVLCSharp.Shared.Core.Initialize();
             _libVLC = new LibVLC();
             State = new LockedState(this);
             _currentIterator = IteratorType.Ordered;
@@ -37,8 +38,6 @@ namespace ElectricPlayer.API
             PlayPauseChanged = new();
             PlaylistChanged = new();
             _commandHistory = new();
-
-            LibVLCSharp.Shared.Core.Initialize();
         }
 
         public void ChangeState(AbstractState state)
